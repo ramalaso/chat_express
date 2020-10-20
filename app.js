@@ -1,6 +1,7 @@
 var express = require('express')
 var app = express()
-const expressLayouts = require('express-ejs-layouts')
+var expressLayouts = require('express-ejs-layouts')
+var rooms = require('./data/rooms.json') 
 
 app.use(express.static('public'))
 app.use(express.static('node_modules/bootstrap/dist'))
@@ -9,12 +10,12 @@ app.use(expressLayouts)
 app.set('layout', './layouts/layout')
 app.set('view engine', 'ejs')
 
-app.get('/rooms', (req, res) => {
-    res.render('rooms')
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Home'})
 });
 
-app.get('/', (req, res) => {
-    res.render('index')
+app.get('/rooms', (req, res) => {
+    res.render('rooms', { title: 'Admin Rooms', rooms: rooms})
 });
 
 app.listen(3000, () => {
