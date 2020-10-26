@@ -45,6 +45,10 @@ app.post('/rooms/edit/:id', (req, res) => {
     // res.redirect('/rooms');
     var roomId = req.params.id;
     var room = _.find(rooms, r => r.id === roomId);
+    if (!room) {
+        res.sendStatus(404);
+        return;
+    }
     room.name = req.body.name;
     res.redirect('/rooms');
 });
