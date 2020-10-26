@@ -3,6 +3,7 @@ var app = express();
 var expressLayouts = require('express-ejs-layouts');
 var rooms = require('./data/rooms.json');
 const uuid = require('node-uuid');
+var _ = require('lodash');
 
 app.set('layout', './layouts/layout');
 app.set('view engine', 'ejs');
@@ -32,11 +33,33 @@ app.post('/rooms/add', (req, res) => {
     rooms.push(room);
     res.redirect('/rooms');
 });
+app.post('/rooms/edit/:id', (req, res) => {
+    // var roomId = req.params.id;
+    // var roomName = req.body.name;
+    // rooms = rooms.filter(r => r.id != roomId);
+    // var room = {
+    //     name: roomName,
+    //     id: roomId
+    // };
+    // rooms.push(room);
+    // res.redirect('/rooms');
+    var roomId = req.params.id;
+    var room = _.find(rooms, r => r.id === roomId);
+    room.name = req.body.name;
+    res.redirect('/rooms');
+});
 
 app.get('/rooms/delete/:id', (req, res) => {
     var roomId = req.params.id;
     rooms = rooms.filter(r => r.id != roomId);
     res.redirect('/rooms');
+});
+
+app.get('/rooms/edit/:id', (req, res) => {
+    var roomId = req.params.id;
+    var room = rooms.filter(r => r.id === roomId);
+    res.render('edit', { title: "Add rooms", room });
+    // res.redirect('/rooms');
 });
 
 app.listen(3000, () => {

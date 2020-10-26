@@ -15,8 +15,10 @@
         <td><%- room.name %> </td>
         <td style="width: 50px;">
           <a href="rooms/delete/<%- room.id %>  ">
-            <i class="material-icons" data-toggle="tooltip" title="Delete" ">&#xE872;</i>
+            <i class="material-icons" data-toggle="tooltip" title="Delete" style="color: red;">&#xE872;</i>
           </a>
+          <a href=" rooms/edit/<%- room.id %> ">
+            <i class=" material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
         </td>
       </tr>
       <% }) %>
