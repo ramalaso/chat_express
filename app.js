@@ -1,9 +1,8 @@
 var express = require('express');
 var app = express();
 var expressLayouts = require('express-ejs-layouts');
-var rooms = require('./data/rooms.json');
-const uuid = require('node-uuid');
-var _ = require('lodash');
+var admin = require('./admin');
+
 
 app.set('layout', './layouts/layout');
 app.set('view engine', 'ejs');
@@ -13,57 +12,10 @@ app.use(express.static('node_modules/bootstrap/dist'));
 app.use(expressLayouts);
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/', admin);
+
 app.get('/', (req, res) => {
     res.render('index', { title: 'Home' });
-});
-
-app.get('/rooms', (req, res) => {
-    res.render('rooms', { title: 'Admin Rooms', rooms: rooms });
-});
-
-app.get('/rooms/add', (req, res) => {
-    res.render('add', { title: "Add rooms" });
-});
-
-app.post('/rooms/add', (req, res) => {
-    var room = {
-        name: req.body.name,
-        id: uuid.v4()
-    };
-    rooms.push(room);
-    res.redirect('/rooms');
-});
-app.post('/rooms/edit/:id', (req, res) => {
-    // var roomId = req.params.id;
-    // var roomName = req.body.name;
-    // rooms = rooms.filter(r => r.id != roomId);
-    // var room = {
-    //     name: roomName,
-    //     id: roomId
-    // };
-    // rooms.push(room);
-    // res.redirect('/rooms');
-    var roomId = req.params.id;
-    var room = _.find(rooms, r => r.id === roomId);
-    if (!room) {
-        res.sendStatus(404);
-        return;
-    }
-    room.name = req.body.name;
-    res.redirect('/rooms');
-});
-
-app.get('/rooms/delete/:id', (req, res) => {
-    var roomId = req.params.id;
-    rooms = rooms.filter(r => r.id != roomId);
-    res.redirect('/rooms');
-});
-
-app.get('/rooms/edit/:id', (req, res) => {
-    var roomId = req.params.id;
-    var room = rooms.filter(r => r.id === roomId);
-    res.render('edit', { title: "Add rooms", room });
-    // res.redirect('/rooms');
 });
 
 app.listen(3000, () => {
