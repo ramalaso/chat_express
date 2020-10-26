@@ -1,17 +1,25 @@
-
-<table class="table table-sm tablerooms">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% rooms.forEach(room => { %>
+<div class="tablerooms">
+  <a class="btn btn-primary" href="/rooms/add">Add new chatroom</a>
+  <table class="table table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% rooms.forEach(room => { %>
       <tr>
         <td><%- room.id %> </td>
         <td><%- room.name %> </td>
+        <td style="width: 50px;">
+          <a href="rooms/delete/<%- room.id %>  ">
+            <i class="material-icons" data-toggle="tooltip" title="Delete" ">&#xE872;</i>
+          </a>
+        </td>
       </tr>
-    <% }) %>
-  </tbody>
-</table>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
